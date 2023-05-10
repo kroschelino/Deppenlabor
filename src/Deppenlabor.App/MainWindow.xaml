@@ -30,7 +30,6 @@
 
         <Border
             x:Name="AppTitleBar"
-            AutomationProperties.AutomationId="AppTitleBar"
             Grid.Column="1"
             Height="{Binding ElementName=NavigationViewControl, Path=CompactPaneLength}"
             Margin="48,0,0,0"
@@ -43,7 +42,7 @@
                     x:Name="AppTitleTextBlock"
                     Margin="16,0,0,0"
                     VerticalAlignment="Center"
-                    Style="{StaticResource CaptionTextBlockStyle}" />
+                    Style="{StaticResource BodyStrongTextBlockStyle}" />
             </StackPanel>
         </Border>
 

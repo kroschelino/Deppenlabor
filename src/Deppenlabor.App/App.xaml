@@ -16,6 +16,46 @@
             <SolidColorBrush x:Key="WindowCaptionBackground" Color="Transparent" />
             <SolidColorBrush x:Key="WindowCaptionBackgroundDisabled">Transparent</SolidColorBrush>
 
+            <!--  Fonts  -->
+            <FontFamily x:Key="SegoeUiVariableSmallRegular">ms-appx:///Assets/Fonts/Segoe-UI-Variable-Static-Small.ttf#Segoe UI Variable Static Small</FontFamily>
+            <FontFamily x:Key="SegoeUiVariableTextRegular">ms-appx:///Assets/Fonts/Segoe-UI-Variable-Static-Text.ttf#Segoe UI Variable Static Text</FontFamily>
+            <FontFamily x:Key="SegoeUiVariableTextSemibold">ms-appx:///Assets/Fonts/Segoe-UI-Variable-Static-Text-Semibold.ttf#Segoe UI Variable Static Text</FontFamily>
+            <FontFamily x:Key="SegoeUiVariableDisplaySemibold">ms-appx:///Assets/Fonts/Segoe-UI-Variable-Static-Display-Semibold.ttf#Segoe UI Variable Static Display</FontFamily>
+            <FontFamily x:Key="SymbolThemeFontFamily">ms-appx:///Assets/Fonts/Segoe Fluent Icons.ttf#Segoe Fluent Icons</FontFamily>
+            <Style x:Key="CaptionTextBlockStyle" TargetType="TextBlock"
+                   BasedOn="{StaticResource CaptionTextBlockStyle}">
+                <Setter Property="FontFamily" Value="{StaticResource SegoeUiVariableSmallRegular}" />
+                <Setter Property="FontWeight" Value="Regular" />
+            </Style>
+            <Style x:Key="BodyTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BodyTextBlockStyle}">
+                <Setter Property="FontFamily" Value="{StaticResource SegoeUiVariableTextRegular}" />
+                <Setter Property="FontWeight" Value="Regular" />
+            </Style>
+            <Style x:Key="BodyStrongTextBlockStyle" TargetType="TextBlock"
+                   BasedOn="{StaticResource BodyStrongTextBlockStyle}">
+                <Setter Property="FontFamily" Value="{StaticResource SegoeUiVariableTextSemibold}" />
+                <Setter Property="FontWeight" Value="Regular" />
+            </Style>
+            <Style x:Key="TitleTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource TitleTextBlockStyle}">
+                <Setter Property="FontFamily" Value="{StaticResource SegoeUiVariableDisplaySemibold}" />
+                <Setter Property="FontWeight" Value="Regular" />
+            </Style>
+            <Style x:Key="TitleLargeTextBlockStyle" TargetType="TextBlock"
+                   BasedOn="{StaticResource TitleLargeTextBlockStyle}">
+                <Setter Property="FontFamily" Value="{StaticResource SegoeUiVariableDisplaySemibold}" />
+                <Setter Property="FontWeight" Value="Regular" />
+            </Style>
+            <Style x:Key="SubtitleTextBlockStyle" TargetType="TextBlock"
+                   BasedOn="{StaticResource SubtitleTextBlockStyle}">
+                <Setter Property="FontFamily" Value="{StaticResource SegoeUiVariableDisplaySemibold}" />
+                <Setter Property="FontWeight" Value="Regular" />
+            </Style>
+            <Style x:Key="DisplayTextBlockStyle" TargetType="TextBlock"
+                   BasedOn="{StaticResource DisplayTextBlockStyle}">
+                <Setter Property="FontFamily" Value="{StaticResource SegoeUiVariableDisplaySemibold}" />
+                <Setter Property="FontWeight" Value="Regular" />
+            </Style>
+
             <!--  Breakpoints  -->
             <x:Double x:Key="Breakpoint640Plus">641</x:Double>
             <Thickness x:Key="NavigationViewContentMargin">0,48,0,0</Thickness>
