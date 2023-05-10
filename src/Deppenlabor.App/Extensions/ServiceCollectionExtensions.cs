@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Deppenlabor.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Deppenlabor.Extensions;
 
@@ -18,13 +19,12 @@ public static class ServiceCollectionExtensions
     /// </summary>
     public static IServiceCollection AddViewModels(this IServiceCollection services)
     {
-
+        services.AddSingleton<PowerBranchesViewModel>();
         return services;
     }
 
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
-
         return services;
     }
 }

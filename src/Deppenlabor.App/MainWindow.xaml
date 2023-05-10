@@ -50,14 +50,46 @@
             x:Name="NavigationViewControl"
             Grid.Column="1"
             Canvas.ZIndex="0"
-            IsTitleBarAutoPaddingEnabled="True">
+            IsSettingsVisible="False"
+            IsBackButtonVisible="Collapsed"
+            IsTitleBarAutoPaddingEnabled="True"
+            Loaded="NavigationViewControl_Loaded"
+            ItemInvoked="NavigationViewControl_ItemInvoked"
+            BackRequested="NavigationViewControl_BackRequested">
             <NavigationView.MenuItems>
-                <NavigationViewItem Icon="Play" Content="Menu Item1" Tag="SamplePage1" />
-                <NavigationViewItem Icon="Save" Content="Menu Item2" Tag="SamplePage2" />
-                <NavigationViewItem Icon="Refresh" Content="Menu Item3" Tag="SamplePage3" />
-                <NavigationViewItem Icon="Download" Content="Menu Item4" Tag="SamplePage4" />
+                <NavigationViewItem Content="Power Branches" Tag="powerBranches">
+                    <NavigationViewItem.Icon>
+                        <ImageIcon Source="ms-appx:///Assets/Icons/code-branch-solid.svg" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Power Merge Requests" Tag="SamplePage2" IsEnabled="False">
+                    <NavigationViewItem.Icon>
+                        <ImageIcon Source="ms-appx:///Assets/Icons/code-pull-request-solid.svg" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Power Package Update" Tag="SamplePage4" IsEnabled="False">
+                    <NavigationViewItem.Icon>
+                        <ImageIcon Source="ms-appx:///Assets/Icons/boxes-packing-solid.svg" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Power Checkout" Tag="SamplePage3" IsEnabled="False">
+                    <NavigationViewItem.Icon>
+                        <ImageIcon Source="ms-appx:///Assets/Icons/download-solid.svg" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Power Clean-up" Tag="SamplePage4" IsEnabled="False">
+                    <NavigationViewItem.Icon>
+                        <ImageIcon Source="ms-appx:///Assets/Icons/snowplow-solid.svg" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
             </NavigationView.MenuItems>
-            <Frame x:Name="contentFrame" />
+
+            <ScrollViewer>
+                <Frame x:Name="ContentFrame"
+                       Margin="24"
+                       IsTabStop="True"
+                       NavigationFailed="ContentFrame_NavigationFailed" />
+            </ScrollViewer>
         </NavigationView>
 
     </Grid>
