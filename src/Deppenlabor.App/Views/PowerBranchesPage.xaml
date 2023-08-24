@@ -5,7 +5,17 @@
     xmlns:labs="using:CommunityToolkit.Labs.WinUI"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:Deppenlabor.Views"
+    xmlns:helpers="using:Deppenlabor.Helpers"
+    xmlns:dtos="using:Deppenlabor.GitLabConnector.Dtos"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d">
+    <interactivity:Interaction.Behaviors>
+        <core:EventTriggerBehavior EventName="Loaded">
+            <core:InvokeCommandAction Command="{x:Bind ViewModel.ConnectToGitlabCommand}" />
+        </core:EventTriggerBehavior>
+    </interactivity:Interaction.Behaviors>
 
     <Page.Resources>
         <!--  These styles can be referenced to create a consistent SettingsPage layout  -->
@@ -17,6 +27,7 @@
     </Page.Resources>
     <Grid>
         <StackPanel MaxWidth="2000"
+                    x:Name="RootPanel"
                     HorizontalAlignment="Stretch"
                     Spacing="{StaticResource SettingsCardSpacing}">
 
@@ -26,33 +37,86 @@
             </StackPanel.ChildrenTransitions>
             <labs:SettingsExpander Header="Connect to GitLab"
                                    Description="Provide a URL and an access token to connect to you GitLab instance"
-                                   IsExpanded="{x:Bind ViewModel.GitlabExpanded}">
+                                   IsExpanded="{x:Bind  helpers:BindingHelper.Not(ViewModel.IsGitlabConnected), Mode=OneWay}">
                 <labs:SettingsExpander.HeaderIcon>
                     <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEC27;" />
                 </labs:SettingsExpander.HeaderIcon>
 
-                <Button Style="{StaticResource AccentButtonStyle}" Content="{x:Bind ViewModel.GitlabConnectButtonText}" />
+                <Button Style="{ThemeResource AccentButtonStyle}"
+                        Content="{x:Bind local:PowerBranchesPage.GetConnectButtonText(ViewModel.IsGitlabConnected), Mode=OneWay  }"
+                        Command="{x:Bind ViewModel.ConnectToGitlabCommand}" />
 
                 <labs:SettingsExpander.Items>
                     <labs:SettingsCard Header="URL">
                         <TextBox Text="{x:Bind ViewModel.GitlabUrl, Mode=TwoWay}"
-                                 IsEnabled="{x:Bind ViewModel.IsGitlabUrlEnabled}"
+                                 IsEnabled="{x:Bind helpers:BindingHelper.Not(ViewModel.IsGitlabConnected), Mode=OneWay}"
                                  PlaceholderText="https://gitlab.yourserver.com" />
                     </labs:SettingsCard>
                     <labs:SettingsCard Header="Access Token">
-                        <TextBox Text="{x:Bind ViewModel.GitlabAccessToken, Mode=TwoWay}"
-                                 IsEnabled="{x:Bind ViewModel.IsGitlabAccessTokenEnabled}" />
+                        <PasswordBox Password="{x:Bind ViewModel.GitlabAccessToken, Mode=TwoWay}"
+                                     IsEnabled="{x:Bind helpers:BindingHelper.Not(ViewModel.IsGitlabConnected), Mode=OneWay}" />
                     </labs:SettingsCard>
                 </labs:SettingsExpander.Items>
             </labs:SettingsExpander>
 
             <labs:SettingsExpander
                 Header="Select Repositories"
-                IsExpanded="{x:Bind ViewModel.IsRepositoriesExpanded}"
-                IsEnabled="{x:Bind ViewModel.IsRepositoriesEnabled}">
+                IsExpanded="{x:Bind  helpers:BindingHelper.And(ViewModel.IsGitlabConnected, ViewModel.IsLoading, x:False, x:True), Mode=OneWay}"
+                IsEnabled="{x:Bind ViewModel.IsGitlabConnected, Mode=OneWay}">
                 <labs:SettingsExpander.HeaderIcon>
                     <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE762;" />
                 </labs:SettingsExpander.HeaderIcon>
+                <ProgressRing
+                    IsIndeterminate="True"
+                    Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}" />
+
+                <labs:SettingsExpander.Items>
+                    <labs:SettingsCard
+                        ContentAlignment="Left">
+                        <AutoSuggestBox
+                            PlaceholderText="Filter repositories" QueryIcon="Find" />
+                    </labs:SettingsCard>
+                    <labs:SettingsCard
+                        ContentAlignment="Left">
+                        <CommandBar
+                            HorizontalContentAlignment="Left"
+                            DefaultLabelPosition="Right">
+                            <AppBarButton Label="Select all">
+                                <AppBarButton.Icon>
+                                    <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                              Glyph="{x:Bind helpers:FontIconHelper.SelectAll}" />
+                                </AppBarButton.Icon>
+
+                            </AppBarButton>
+
+                            <AppBarButton Label="Deselect all">
+                                <AppBarButton.Icon>
+                                    <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                              Glyph="{x:Bind helpers:FontIconHelper.ClearSelection}" />
+                                </AppBarButton.Icon>
+
+                            </AppBarButton>
+
+                        </CommandBar>
+                    </labs:SettingsCard>
+                    <labs:SettingsCard ContentAlignment="Left">
+                            
+                            <ListView x:Name="RepositoriesListView"
+                                      IsMultiSelectCheckBoxEnabled="True"
+                                      SelectionMode="Multiple"
+                                      IsItemClickEnabled="False"
+                                      Width="{Binding Path=ActualWidth, ElementName=RootPanel, Mode=OneWay}"
+                                      MaxHeight="400"
+                                      ItemsSource="{x:Bind ViewModel.Repositories, Mode=OneWay}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="dtos:Repository">
+                                        <TextBlock Text="{x:Bind Name}" />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+
+                            </ListView>
+                    </labs:SettingsCard>
+                </labs:SettingsExpander.Items>
             </labs:SettingsExpander>
 
         </StackPanel>

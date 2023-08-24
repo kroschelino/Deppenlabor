@@ -4,6 +4,8 @@ using System.Runtime.Versioning;
 using Windows.Storage;
 using CommunityToolkit.Extensions.Hosting;
 using Deppenlabor.Extensions;
+using Deppenlabor.GitLabConnector.Extensions;
+using Deppenlabor.UserSettings.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -34,6 +36,8 @@ public static class Program
         services.AddViews();
         services.AddViewModels();
         services.AddServices();
+        services.AddGitlab();
+        services.AddUserSettings();
     }
 
     private static void ConfigureLogging(ILoggingBuilder loggingBuilder)

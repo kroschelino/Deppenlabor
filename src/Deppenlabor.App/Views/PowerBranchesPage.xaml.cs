@@ -22,4 +22,6 @@ public sealed partial class PowerBranchesPage : Page
     }
 
     public PowerBranchesViewModel ViewModel => (PowerBranchesViewModel)DataContext;
+
+    public static string GetConnectButtonText(bool isConnected) => isConnected ? "Disconnect" : "Connect";
 }

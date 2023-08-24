@@ -10,7 +10,7 @@ public static class ServiceCollectionExtensions
     /// </summary>
     public static IServiceCollection AddViews(this IServiceCollection services)
     {
-        services.AddSingleton<MainWindow>();
+        services.AddScoped<MainWindow>();
         return services;
     }
 
@@ -19,12 +19,9 @@ public static class ServiceCollectionExtensions
     /// </summary>
     public static IServiceCollection AddViewModels(this IServiceCollection services)
     {
-        services.AddSingleton<PowerBranchesViewModel>();
+        services.AddScoped<PowerBranchesViewModel>();
         return services;
     }
 
-    public static IServiceCollection AddServices(this IServiceCollection services)
-    {
-        return services;
-    }
+    public static IServiceCollection AddServices(this IServiceCollection services) => services;
 }
